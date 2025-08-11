@@ -1,29 +1,35 @@
 import { useEffect, useState } from "react";
 
-const NoteForm = ({ onSubmit, initialDate }) => {
-  const [ note, setNotes ] = useState(initialDate);
+const NoteForm = ({ onSubmit, initialData }) => {
+  const [note, setNote] = useState(initialData || { title: "", description: "" });
 
-  // Necesitamos actualizar los cambios si los datos iniciales cambiar
+  // Actualiza el estado cuando cambien los datos iniciales
   useEffect(() => {
-    setNotes[initialDate];
-  }, [initialDate])
+    if (initialData) {
+      setNote(initialData);
+    }
+  }, [initialData]);
 
   const handleChange = (e) => {
-    setNotes({
+    setNote({
       ...note,
       [e.target.name]: e.target.value,
     });
   };
 
   const handleSubmit = (e) => {
-    e.preventDefault()
-    onSubmit(note)
-  }
+    e.preventDefault();
+    onSubmit(note);
+  };
+
   return (
-    <form onSubmit={handleSubmit} className="bg-base-300 rounded-lg max-w-4xl mx-auto p-10">
+    <form
+      onSubmit={handleSubmit}
+      className="bg-base-300 rounded-lg max-w-4xl mx-auto p-10"
+    >
       <input
         className="block w-full mb-8 input lg:input-lg focus:ring-0 focus:outline-0 border-0"
-        placeholder="Titulo"
+        placeholder="Título"
         type="text"
         id="title"
         name="title"
